@@ -3,8 +3,9 @@ from pyspark.sql.functions import col
 import time
 
 spark = SparkSession.builder.appName("MyGoitSparkSandbox").getOrCreate()
-nuek_df = spark.read.csv('./nuek-vuh3.csv', header=True)
-
+# nuek_df = spark.read.csv('./nuek-vuh3.csv', header=True)
+local_file = "/tmp/nuek-vuh3.json"
+nuek_df = spark.read.json(local_file)
 # # --------- first example ------- lazy 1
 # # Start the timer
 # start_time = time.time()

@@ -1,13 +1,27 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import *
 from pyspark.sql.types import TimestampType, IntegerType
+import requests
+import json
+import os
 
 # Створюємо сесію Spark
 spark = SparkSession.builder.appName("MyGoitSparkSandbox").getOrCreate()
 
 # Завантажуємо датасет
-nuek_df = spark.read.csv('./nuek-vuh3.csv', header=True)
+# nuek_df = spark.read.csv('./nuek-vuh3.csv', header=True)
+url = "https://data.sfgov.org/resource/nuek-vuh3.json"
+local_file = "/tmp/nuek-vuh3.json"
 
+if not os.path.exists(local_file):
+    print(f"Downloading data from {url}...")
+    response = requests.get(url)
+    with open(local_file, "w") as f:
+        json.dump(response.json(), f)
+    print("Data downloaded successfully!")
+
+# nuek_df = spark.read.csv('./nuek-vuh3.csv', header=True)
+nuek_df = spark.read.json(local_file)
 # Виводимо на екран перші 5 записів
 nuek_df.show(5)
 
