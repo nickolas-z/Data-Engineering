@@ -59,3 +59,4 @@ print(count)
 
 end_time = time.time()
 print(f"Processing time: {end_time - start_time:.2f} seconds")
+spark.stop()

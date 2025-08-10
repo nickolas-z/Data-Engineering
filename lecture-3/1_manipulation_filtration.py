@@ -44,3 +44,4 @@ print(df.collect(), type(df.collect()))
 print(df.collect()[0]['count'])
 # або за номером рядка та номером колонки
 print(df.collect()[0][0])
+spark.stop()
